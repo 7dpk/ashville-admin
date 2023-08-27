@@ -4,6 +4,7 @@ import { useState } from 'react';
 // import AddComponent from './AddComponent'; // Import your "Add" component
 // import ListComponent from './ListComponent'; // Import your "List" component
 import Add from './components/Add';
+import List from './components/List'
 const App = () => {
   const [selectedMenu, setSelectedMenu] = useState('');
   const renderComponent = (selectedMenu) => {
@@ -11,9 +12,9 @@ const App = () => {
       case 'add':
         return <Add/>;
       case 'list':
-        return <h1>List</h1>;
+        return <List/>;
       default:
-        return null;
+        return <List/>;
     }
   };
 

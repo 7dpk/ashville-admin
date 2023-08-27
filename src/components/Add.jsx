@@ -16,26 +16,18 @@ const FormComponent = () => {
   const [xValue, setNumberValue] = useState(0);
   const [yValue, setAdditionalNumberValue] = useState(0);
   const [markerValue, setmarkerValue] = useState('');
-  const [imageScale, setImageScale] = useState(1);
   const [colorPickerVisible, setColorPickerVisible] = useState(true);
-  const [color, setColor] = useState('#000000');
+  const [color, setColor] = useState('#ffffff');
   const [passwordValue, setPasswordValue] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
   const [selectedImage, setSelectedImage] = useState('');
-  const [offsetX, setOffsetX] = useState(0);
-  const [offsetY, setOffsetY] = useState(0);
-  const [font, setFont] = useState('15px Calibri,sans serif');
-  const [anchorX, setAnchorX] = useState(0);
-  const [anchorY, setAnchorY] = useState(0);
 
   const handleXChange = (event) => {
     setNumberValue(event.target.value);
-    setAnchorX(event.target.value);
   };
 
   const handleYvalue = (event) => {
     setAdditionalNumberValue(event.target.value);
-    setAnchorY(event.target.value);
   };
 
   const handleMarkerChange = (event) => {
@@ -60,9 +52,9 @@ const FormComponent = () => {
 
   useEffect(() => {
     async function fetchData() {
-        const response = (await axios.get('http://localhost:3000/markers')).data;
+        const response = (await axios.get('http://api.ashville.me/markers')).data;
         // add the prefix http://34.131.81.127:3000/img/ to each image name
-        response.forEach((marker, i) => response[i] = `http://localhost:3000/img/${marker}`);
+        response.forEach((marker, i) => response[i] = `http://api.ashville.me/img/${marker}`);
         setImageOptions(response);
         setSelectedImage(imageOptions[0]);
     }
@@ -75,19 +67,19 @@ const FormComponent = () => {
       x: Number(xValue),
       z: Number(yValue),
       image: selectedImage,
-      imageScale: Number(imageScale),
-      imageAnchor: [Number(anchorX), Number(anchorY)],
+      imageScale: 0.5,
+      imageAnchor: [0.5, 1],
       text: markerValue,
       textColor: color,
-      offsetX: Number(offsetX),
-      offsetY: Number(offsetY),
-      font,
+      offsetX: 0,
+      offsetY: 8,
+      font: "bold 12px Verdana",
       password: passwordValue,
     };
 
-    // post the data to the server http://localhost:3000/add
+    // post the data to the server http://api.ashville.me/add
     try {
-      const res = await fetch('http://localhost:3000/point', {
+      const res = await fetch('http://api.ashville.me/point', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +108,7 @@ const FormComponent = () => {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      height="120vh"
+      height="80vh"
       justifyContent="center" // Change to "center" to align items in the middle
       sx={{
         border: '1px solid #ccc',
@@ -137,7 +129,7 @@ const FormComponent = () => {
           fullWidth
           required
           
-          sx={{ marginTop: '16px' }}
+          // sx={{ marginTop: '5px' }}
         />
 
         <TextField
@@ -151,27 +143,7 @@ const FormComponent = () => {
           
           sx={{ marginTop: '16px' }}
         />
-        <Stack spacing={2} direction="row" sx={{marginTop: 4}}>
-
-          <TextField
-            label="Image Anchor X"
-            variant="outlined"
-            type="number"
-            value={anchorX}
-            onChange={(event) => {setAnchorX(event.target.value)}}
-            fullWidth
-            sx={{ marginTop: '16px' }}
-            />
-            <TextField
-            label="Image Anchor Y"
-            variant="outlined"
-            type="number"
-            value={anchorY}
-            onChange={(event) => {setAnchorY(event.target.value)}}
-            fullWidth
-            sx={{ marginTop: '16px' }}
-            />
-          </Stack>
+        
         <TextField
           label="Marker Text"
           variant="outlined"
@@ -205,43 +177,8 @@ const FormComponent = () => {
             <input type="color" value={color} onChange={handleColorChange} />
           </div>
         )}
-        <TextField
-            label="ImageScale"
-            variant="outlined"
-            type="number"
-            value={imageScale}
-            onChange={(event) => {setImageScale(event.target.value)}}
-            sx={{ marginTop: '16px'}}
-          />
+        
       </Stack>
-      <Stack spacing={2} direction="row" sx={{marginBottom: 4}}>
-        <TextField
-            label="offsetX"
-            variant="outlined"
-            type="number"
-            value={offsetX}
-            onChange={(event) => {setOffsetX(event.target.value)}}
-            sx={{ marginTop: '16px'}}
-          />
-          <TextField
-            label="offsetY"
-            variant="outlined"
-            type="number"
-            value={offsetY}
-            onChange={(event) => {setOffsetY(event.target.value)}}
-            sx={{ marginTop: '16px'}}
-          />
-      </Stack>
-      <TextField
-          label="Font CSS"
-          variant="outlined"
-          value={font}
-          onChange={(event) => {setFont(event.target.value)}}
-          fullWidth
-          required
-          
-          sx={{ marginTop: '16px' }}
-        />
 
         <TextField
           label="Password"
