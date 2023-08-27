@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Box, FormControl, InputLabel, Select, MenuItem, TextField, Button, Stack } from '@mui/material';
+import { Box, FormControl, Select, MenuItem, TextField, Button, Stack } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const extractMarkerName = (imageUrl) => {
-  const parts = imageUrl.split('/');
-  const fileName = parts[parts.length - 1];
-  const markerName = fileName.split('.')[0];
-  return markerName;
-};
-
 const FormComponent = () => {
   const [xValue, setNumberValue] = useState(0);
   const [yValue, setAdditionalNumberValue] = useState(0);
   const [markerValue, setmarkerValue] = useState('');
-  const [colorPickerVisible, setColorPickerVisible] = useState(true);
   const [color, setColor] = useState('#ffffff');
   const [passwordValue, setPasswordValue] = useState('');
   const [imageOptions, setImageOptions] = useState([]);
@@ -36,10 +28,6 @@ const FormComponent = () => {
 
   const handleImageChange = (event) => {
     setSelectedImage(event.target.value);
-  };
-
-  const handleColorButtonClick = () => {
-    setColorPickerVisible(!colorPickerVisible);
   };
 
   const handleColorChange = (event) => {
@@ -172,7 +160,7 @@ const FormComponent = () => {
           ))}
         </Select>
 
-        {colorPickerVisible && (
+        {(
           <div style={{ marginBottom: 16, justifyContent: 'space-between' }}>
             <input type="color" value={color} onChange={handleColorChange} />
           </div>
