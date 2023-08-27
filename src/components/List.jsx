@@ -24,7 +24,7 @@ function MapMarkerList() {
 
   useEffect(() => {
     // Fetch markers using a GET request
-    fetch('http://api.ashville.me/allpoints')
+    fetch('https://api.ashville.me/allpoints')
       .then((response) => response.json())
       .then((data) => setMarkers(data))
       .catch((error) => console.error('Error fetching markers:', error));
@@ -40,7 +40,7 @@ function MapMarkerList() {
     
 
     try {
-        const res = await fetch(`http://api.ashville.me/point/${selectedItemId}`, {
+        const res = await fetch(`https://api.ashville.me/point/${selectedItemId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

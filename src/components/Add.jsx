@@ -40,9 +40,9 @@ const FormComponent = () => {
 
   useEffect(() => {
     async function fetchData() {
-        const response = (await axios.get('http://api.ashville.me/markers')).data;
+        const response = (await axios.get('https://api.ashville.me/markers')).data;
         // add the prefix http://34.131.81.127:3000/img/ to each image name
-        response.forEach((marker, i) => response[i] = `http://api.ashville.me/img/${marker}`);
+        response.forEach((marker, i) => response[i] = `https://api.ashville.me/img/${marker}`);
         setImageOptions(response);
         setSelectedImage(imageOptions[0]);
     }
@@ -67,7 +67,7 @@ const FormComponent = () => {
 
     // post the data to the server http://api.ashville.me/add
     try {
-      const res = await fetch('http://api.ashville.me/point', {
+      const res = await fetch('https://api.ashville.me/point', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
